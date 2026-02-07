@@ -1,31 +1,22 @@
-_(If you've come here looking to simply run Electrum Ravencoin, you may download a prebuilt binary for
-[windows](https://github.com/Electrum-RVN-SIG/electrum-ravencoin/releases/download/v1.2.1/electrum-ravencoin-v1.2.1-setup.exe),
-[linux](https://github.com/Electrum-RVN-SIG/electrum-ravencoin/releases/download/v1.2.1/electrum-ravencoin-v1.2.1-x86_64.AppImage), and
-[mac](https://github.com/Electrum-RVN-SIG/electrum-ravencoin/releases/download/v1.2.0/electrum-ravencoin-v1.2.0.dmg)
-[or see other options](https://github.com/Electrum-RVN-SIG/electrum-ravencoin/releases/latest).)_
+_(If you've come here looking to simply run Electrum YAI, you may download a prebuilt binary from
+[the releases page](https://github.com/yottaflux/electrum-yai/releases/latest).)_
 
-Migrating from versions earlier than v1.0.0? Read the release notes for [that version](https://github.com/Electrum-RVN-SIG/electrum-ravencoin/releases/tag/v1.0.1).
-
-# Electrum Ravencoin - Lightweight Ravencoin client
+# Electrum YAI - Lightweight Yottaflux client
 
 ```
 Licence: MIT Licence
 Author: Thomas Voegtlin
 Language: Python (>= 3.8)
-Homepage: https://electrum.org/
+Homepage: https://yottaflux.ai/
 ```
-
-[![Build Status](https://api.cirrus-ci.com/github/spesmilo/electrum.svg?branch=master)](https://cirrus-ci.com/github/spesmilo/electrum)
-[![Test coverage statistics](https://coveralls.io/repos/github/spesmilo/electrum/badge.svg?branch=master)](https://coveralls.io/github/spesmilo/electrum?branch=master)
-[![Help translate Electrum online](https://d322cqt584bo4o.cloudfront.net/electrum/localized.svg)](https://crowdin.com/project/electrum)
 
 ## Run your own server!
 
-https://github.com/Electrum-RVN-SIG/electrumx-ravencoin
+https://github.com/yottaflux/electrumx-yai
 
 ## Need help?
 
-Find @kralverde on [discord](https://discord.com/invite/jn6uhur).
+Find us on [GitHub Issues](https://github.com/yottaflux/electrum-yai/issues).
 
 ## Getting started
 
@@ -88,7 +79,7 @@ $ python3 -m pip install --user .
 
 This will download and install the Python dependencies used by
 Electrum instead of using the 'packages' directory.
-It will also place an executable named `electrum` in `~/.local/bin`,
+It will also place an executable named `electrum_yai` in `~/.local/bin`,
 so make sure that is on your `PATH` variable.
 
 
@@ -99,8 +90,8 @@ and [for macOS](contrib/osx/README_macos.md))_
 
 Check out the code from GitHub:
 ```
-$ git clone https://github.com/spesmilo/electrum.git
-$ cd electrum
+$ git clone https://github.com/yottaflux/electrum-yai.git
+$ cd electrum-yai
 $ git submodule update --init
 ```
 
@@ -147,9 +138,6 @@ Any help testing the software, reporting or fixing bugs, reviewing pull requests
 and recent changes, writing tests, or helping with outstanding issues is very welcome.
 Implementing new features, or improving/refactoring the codebase, is of course
 also welcome, but to avoid wasted effort, especially for larger changes,
-we encourage discussing these on the issue tracker or IRC first.
+we encourage discussing these on the issue tracker first.
 
-Besides [GitHub](https://github.com/spesmilo/electrum),
-most communication about Electrum development happens on IRC, in the
-`#electrum` channel on Libera Chat. The easiest way to participate on IRC is
-with the web client, [web.libera.chat](https://web.libera.chat/#electrum).
+Visit us on [GitHub](https://github.com/yottaflux/electrum-yai).

@@ -169,9 +169,9 @@ info "installing electrum and its dependencies."
 "$python" -m pip install --no-build-isolation --no-dependencies --no-binary :all: --no-warn-script-location \
     --cache-dir "$PIP_CACHE_DIR" -r "$CONTRIB/deterministic-build/requirements-hw.txt"
 "$python" -m pip install --no-build-isolation --no-dependencies --no-binary :all: --no-warn-script-location \
-    --cache-dir "$PIP_CACHE_DIR" -r "$CONTRIB/deterministic-build/requirements-ravencoin-pypi.txt"
+    --cache-dir "$PIP_CACHE_DIR" -r "$CONTRIB/deterministic-build/requirements-yottaflux-pypi.txt"
 "$python" -m pip install --no-build-isolation --no-dependencies --no-binary :all: --no-warn-script-location \
-    --cache-dir "$PIP_CACHE_DIR" -r "$CONTRIB/deterministic-build/requirements-ravencoin-git.txt"
+    --cache-dir "$PIP_CACHE_DIR" -r "$CONTRIB/deterministic-build/requirements-yottaflux-git.txt"
 
 "$python" -m pip install --no-build-isolation --no-dependencies --no-warn-script-location \
     --cache-dir "$PIP_CACHE_DIR" "$PROJECT_ROOT"

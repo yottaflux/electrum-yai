@@ -227,11 +227,11 @@ python3 -m pip install --no-build-isolation --no-dependencies --no-binary :all: 
 info "Installing dependencies specific to yottaflux..."
 python3 -m pip install --no-build-isolation --no-dependencies --no-binary :all: \
     --no-warn-script-location \
-    -Ir ./contrib/deterministic-build/requirements-ravencoin-pypi.txt \
+    -Ir ./contrib/deterministic-build/requirements-yottaflux-pypi.txt \
     || fail "Could not install dependencies from pypi"
 python3 -m pip install --no-build-isolation --no-dependencies --no-binary :all: \
     --no-warn-script-location \
-    -Ir ./contrib/deterministic-build/requirements-ravencoin-git.txt \
+    -Ir ./contrib/deterministic-build/requirements-yottaflux-git.txt \
     || fail "Could not install dependencies from git"
 
 info "Building $PACKAGE..."
@@ -271,7 +271,7 @@ fi
 info "Creating .DMG"
 hdiutil create -fs HFS+ -volname $PACKAGE -srcfolder dist/$PACKAGE.app dist/electrum-yai-$VERSION.dmg || fail "Could not create .DMG"
 
-DoCodeSignMaybe ".DMG" "dist/electrum-ravencoin-${VERSION}.dmg"
+DoCodeSignMaybe ".DMG" "dist/electrum-yai-${VERSION}.dmg"
 
 if [ -z "$CODESIGN_CERT" ]; then
     warn "App was built successfully but was not code signed. Users may get security warnings from macOS."
