@@ -1,13 +1,24 @@
-# CLAUDE.md — Electrum Ravencoin
+# CLAUDE.md — Electrum YAI (Yottaflux)
 
 ## Project Overview
 
-Electrum Ravencoin is a lightweight Ravencoin (RVN) cryptocurrency wallet forked from Electrum (Bitcoin). It is a Python 3.8+ desktop application supporting Qt GUI, text UI, and daemon modes. Key features include Lightning Network support, hardware wallet integration, Ravencoin asset management, and IPFS metadata resolution.
+Electrum YAI is a lightweight Yottaflux (YAI) cryptocurrency wallet forked from Electrum-Ravencoin (which itself was forked from Electrum for Bitcoin). It is a Python 3.8+ desktop application supporting Qt GUI, text UI, and daemon modes. Key features include hardware wallet integration, Yottaflux asset management, and IPFS metadata resolution.
 
 - **Version**: 1.2.2 (client), 4.4.6.0 (APK)
 - **License**: MIT
-- **Repository**: https://github.com/Electrum-RVN-SIG/electrum-ravencoin
-- **Original**: Electrum by Thomas Voegtlin, Ravencoin conversion by kralverde
+- **Repository**: https://github.com/yottaflux/electrum-yai
+- **Original**: Electrum by Thomas Voegtlin, Ravencoin conversion by kralverde, Yottaflux port
+
+## Yottaflux Network Summary
+
+- **Ticker**: YAI, smallest unit: corbie
+- **PoW Algorithm**: X16RV2 (KawPOW disabled via far-future timestamp)
+- **Mainnet P2PKH prefix**: 78 (addresses start with `Y`)
+- **Mainnet P2SH prefix**: 137 (addresses start with `x`)
+- **BIP44 coin type**: 5050 (mainnet), 1 (testnet)
+- **Asset script marker**: `yai` (3 bytes after OP_YAI_ASSET 0xc0)
+- **URI scheme**: `yottaflux:`
+- **Genesis**: `000000f13b9584fc6830148c59ec77e5671a5ac3ff0f26a9ae0679c0ca40f579`
 
 ## Repository Structure
 
@@ -22,18 +33,17 @@ electrum-yai/
 │   ├── locale/                # i18n translation files
 │   ├── wordlist/              # BIP39 wordlists
 │   ├── _vendor/               # Vendored dependencies
-│   ├── constants.py           # Network constants (RavencoinMainnet, RavencoinTestnet)
+│   ├── constants.py           # Network constants (YottafluxMainnet, YottafluxTestnet)
 │   ├── version.py             # Version definitions
 │   ├── wallet.py              # Wallet implementation
 │   ├── transaction.py         # Transaction handling
-│   ├── bitcoin.py             # Bitcoin/Ravencoin primitives
-│   ├── asset.py               # Ravencoin asset operations
+│   ├── bitcoin.py             # Bitcoin/Yottaflux primitives
+│   ├── asset.py               # Yottaflux asset operations
 │   ├── ipfs_db.py             # IPFS metadata integration
 │   ├── network.py             # Network communication
 │   ├── daemon.py              # Daemon mode
 │   ├── commands.py            # CLI commands
-│   ├── lnchannel.py           # Lightning channel management
-│   ├── lnpeer.py              # Lightning peer communication
+│   ├── bip21.py               # URI scheme (yottaflux:)
 │   └── ...                    # ~75 additional modules
 ├── contrib/                   # Build scripts and requirements
 │   ├── requirements/          # Pip requirement files
@@ -74,7 +84,7 @@ python3 -m pip install --user -e ".[full]"          # everything except libsecp2
 
 ```bash
 ./run_electrum                    # Run from source
-electrum-ravencoin                # Run if installed via pip
+electrum_yai                      # Run if installed via pip
 ```
 
 ## Testing
@@ -138,19 +148,22 @@ Mandatory lint rules include: syntax errors (E9), indentation (E101, W191), crit
 
 ### Architecture Patterns
 
-- **Network switching**: `constants.net` is a module-level singleton (`RavencoinMainnet` or `RavencoinTestnet`). Import the `constants` module, not `net` directly.
+- **Network switching**: `constants.net` is a module-level singleton (`YottafluxMainnet` or `YottafluxTestnet`). Import the `constants` module, not `net` directly.
 - **Async**: Heavy use of `asyncio` throughout the networking and Lightning stack. The global event loop is managed via `electrum.util`.
 - **Plugins**: Located in `electrum/plugins/`. Each plugin is a subdirectory with its own `__init__.py`. Hardware wallet plugins (trezor, ledger, keepkey, etc.) follow a common pattern.
 - **GUI**: Qt GUI in `electrum/gui/qt/`. Text UI in `electrum/gui/text.py`.
 - **Vendored deps**: In `electrum/_vendor/` — do not modify directly.
 - **Protobuf**: Generated files end in `_pb2.py` — excluded from linting, do not edit.
 
-### Ravencoin-Specific
+### Yottaflux-Specific
 
-- **Assets**: Ravencoin asset logic in `electrum/asset.py`. Burn addresses/amounts defined in `electrum/constants.py` (`BurnAmounts`, `BurnAddresses` named tuples).
-- **Hashing algorithms**: Uses x16r, x16rv2, and kawpow (Ravencoin PoW algorithms) via native C extensions installed from git repos.
+- **Assets**: Asset logic in `electrum/asset.py`. Burn addresses/amounts defined in `electrum/constants.py` (`BurnAmounts`, `BurnAddresses` named tuples).
+- **Asset script marker**: `b'yai'` — the 3-byte identifier after OP_YAI_ASSET (0xc0) in scripts.
+- **Hashing algorithms**: Uses x16rv2 for PoW (KawPOW is disabled). C extensions: `x16r_hash`, `x16rv2_hash`, `kawpow` installed from git repos.
 - **IPFS**: IPFS metadata resolution for assets in `electrum/ipfs_db.py`.
-- **Network constants**: Mainnet uses address prefix 60 (P2PKH), BIP44 coin type 175. Testnet uses prefix 111, coin type 1.
+- **Network constants**: Mainnet uses address prefix 78 (P2PKH, starts with `Y`), BIP44 coin type 5050. Testnet uses prefix 111, coin type 1.
+- **Message signing prefix**: `"\x19Yottaflux Signed Message:\n"`
+- **Data directory**: `~/.electrum-yai` (Linux), `Electrum-YAI` (Windows/macOS)
 
 ### Dependencies
 
@@ -159,7 +172,7 @@ Core dependencies are in `contrib/requirements/requirements.txt`. Key packages:
 - `aiohttp` / `aiohttp_socks` — async HTTP with SOCKS proxy
 - `qdarkstyle` — Qt dark theme
 - `protobuf` — payment request protocol
-- `x16r_hash`, `x16rv2_hash`, `kawpow` — Ravencoin PoW hash algorithms (from git)
+- `x16r_hash`, `x16rv2_hash`, `kawpow` — PoW hash algorithms (from git)
 - `ipfs-car-decoder`, `multiformats` — IPFS support
 
 Hardware wallet deps: `contrib/requirements/requirements-hw.txt`
@@ -173,7 +186,8 @@ Hardware wallet deps: `contrib/requirements/requirements-hw.txt`
 | `electrum/commands.py` | All CLI/RPC commands |
 | `electrum/wallet.py` | Core wallet logic |
 | `electrum/transaction.py` | Transaction creation and parsing |
-| `electrum/asset.py` | Ravencoin asset management |
+| `electrum/asset.py` | Yottaflux asset management |
+| `electrum/bip21.py` | URI scheme (`yottaflux:`) |
 | `electrum/simple_config.py` | Configuration system |
 | `electrum/daemon.py` | Background daemon |
 | `electrum/network.py` | Server connections |
@@ -202,7 +216,7 @@ class TestMyFeature(ElectrumTestCase):
 
 ### Modifying Network Constants
 
-Edit `electrum/constants.py`. Both `RavencoinMainnet` and `RavencoinTestnet` must be kept in sync for any structural changes to `AbstractNet`.
+Edit `electrum/constants.py`. Both `YottafluxMainnet` and `YottafluxTestnet` must be kept in sync for any structural changes to `AbstractNet`.
 
 ### Working with Assets
 

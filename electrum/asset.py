@@ -16,7 +16,7 @@ from .json_db import StoredObject, stored_as
 
 from .util import ByteReader
 
-# https://github.com/RavenProject/Ravencoin/blob/master/src/assets/assets.cpp
+# https://github.com/yottaflux/Yottaflux/blob/master/src/assets/assets.cpp
 
 MAX_NAME_LENGTH = 32
 MAX_CHANNEL_NAME_LENGTH = 12
@@ -65,7 +65,7 @@ _QUALIFIER_INDICATOR = r'^[#][A-Z0-9._]{3,}$'
 _SUB_QUALIFIER_INDICATOR = r'^#[A-Z0-9._]+\/#[A-Z0-9._]+$'
 _RESTRICTED_INDICATOR = r'^[\$][A-Z0-9._]{3,}$'
 
-_BAD_NAMES = '^RVN$|^RAVEN$|^RAVENCOIN$|^RVNS$|^RAVENS$|^RAVENCOINS$|^#RVN$|^#RAVEN$|^#RAVENCOIN$|^#RVNS$|^#RAVENS$|^#RAVENCOINS$'
+_BAD_NAMES = '^YAI$|^YOTTAFLUX$|^YAIS$|^#YAI$|^#YOTTAFLUX$|^#YAIS$'
 
 def _isMatchAny(symbol: str, badMatches: Sequence[str]) -> bool:
     return any((re.match(x, symbol) for x in badMatches))
