@@ -132,7 +132,7 @@ Section
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} Testnet.lnk" "$INSTDIR\electrum-yai-${PRODUCT_VERSION}.exe" "--testnet" "$INSTDIR\electrum-yai-${PRODUCT_VERSION}.exe" 0
 
 
-  ;Links bitcoin: and lightning: URIs to Electrum
+  ;Links yottaflux: and lightning: URIs to Electrum
   WriteRegStr HKCU "Software\Classes\yottaflux" "" "URL:yottaflux Protocol"
   WriteRegStr HKCU "Software\Classes\yottaflux" "URL Protocol" ""
   WriteRegStr HKCU "Software\Classes\yottaflux" "DefaultIcon" "$\"$INSTDIR\electrum.ico, 0$\""
@@ -171,7 +171,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\${PRODUCT_NAME}\*.*"
   RMDir  "$SMPROGRAMS\${PRODUCT_NAME}"
 
-  DeleteRegKey HKCU "Software\Classes\bitcoin"
+  DeleteRegKey HKCU "Software\Classes\yottaflux"
   DeleteRegKey HKCU "Software\${PRODUCT_NAME}"
   DeleteRegKey HKCU "${PRODUCT_UNINST_KEY}"
 SectionEnd

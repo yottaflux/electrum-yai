@@ -772,7 +772,7 @@ class CreateAssetPanel(ManageAssetPanel):
 
             try:
                 if not goto_address:
-                    # Freeze a change address so it is seperate from the rvn change
+                    # Freeze a change address so it is seperate from the yai change
                     self.parent.wallet.set_reserved_state_of_address(asset_change_address, reserved=True)
                 if parent_asset_change_address:
                     self.parent.wallet.set_reserved_state_of_address(parent_asset_change_address, reserved=True)
@@ -1000,7 +1000,7 @@ class ReissueAssetPanel(ManageAssetPanel):
 
             try:
                 if not goto_address:
-                    # Freeze a change address so it is seperate from the rvn change
+                    # Freeze a change address so it is seperate from the yai change
                     self.parent.wallet.set_reserved_state_of_address(asset_change_address, reserved=True)
                 self.parent.wallet.set_reserved_state_of_address(parent_asset_change_address, reserved=True)
 
