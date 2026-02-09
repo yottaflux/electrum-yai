@@ -585,7 +585,7 @@ class TestLNUtil(ElectrumTestCase):
             inputs=our_htlc_tx_inputs,
             output=our_htlc_tx_output)
 
-        local_sig = our_htlc_tx.sign_txin(0, local_privkey[:-1])
+        local_sig = our_htlc_tx.sign_txin(0, local_privkey[:-1], wallet=None)
 
         our_htlc_tx_witness = make_htlc_tx_witness(
             remotehtlcsig=bfh(remote_htlc_sig) + b"\x01",  # 0x01 is SIGHASH_ALL
@@ -728,7 +728,7 @@ class TestLNUtil(ElectrumTestCase):
         assert type(privkey) is bytes
         assert len(pubkey) == 33
         assert len(privkey) == 33
-        tx.sign({pubkey.hex(): (privkey[:-1], True)})
+        tx.sign({pubkey.hex(): (privkey[:-1], True)}, wallet=None)
         sighash = Sighash.to_sigbytes(Sighash.ALL).hex()
         tx.add_signature_to_txin(txin_idx=0, signing_pubkey=remote_pubkey.hex(), sig=remote_signature + sighash)
 
@@ -772,7 +772,7 @@ class TestLNUtil(ElectrumTestCase):
         # just pubkey
         self.assertEqual(extract_nodeid(f"{pubkey1.hex()}"), (pubkey1, None))
         # bolt11 invoice
-        self.assertEqual(extract_nodeid("lnbc241ps9zprzpp5qqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqypqsp5zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygshp58yjmdan79s6qqdhdzgynm4zwqd5d7xmw5fk98klysy043l2ahrqs9qypqszrwfgrl5k3rt4q4mclc8t00p2tcjsf9pmpcq6lu5zhmampyvk43fk30eqpdm8t5qmdpzan25aqxqaqdzmy0smrtduazjcxx975vz78ccpx0qhev"),
+        self.assertEqual(extract_nodeid("lnyc2410n1p0xa5yrpp5qqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqypqsp5zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygsdq8w3jhxaqxqrrsswygylgkw6vvpta6sufye8cz9ys9jfkh5aeyuvpgja8vyp6ztgwjn6hz0pz06gtylle29g2a47vu2nefpqm6wer599e8h8z4svspmd0cp3pcq9d"),
                          (bfh("03e7156ae33b0a208d0744199163177e909e80176e55d97a2f221ede0f934dd9ad"), None))
 
     def test_ln_features_validate_transitive_dependencies(self):
@@ -889,7 +889,7 @@ class TestLNUtil(ElectrumTestCase):
         self.assertFalse(f1.supports(LnFeatures.OPTION_TRAMPOLINE_ROUTING_REQ_ELECTRUM))
 
     def test_lnworker_decode_channel_update_msg(self):
-        msg_without_prefix = bytes.fromhex("439b71c8ddeff63004e4ff1f9764a57dcf20232b79d9d669aef0e31c42be8e44208f7d868d0133acb334047f30e9399dece226ccd98e5df5330adf7f356290516fe28c0ab6f1b372c1a6a246ae63f74f931e8365e15a089c68d619000000000008762700054a00005ef2cf9c0101009000000000000003e80000000000000001000000002367b880")
+        msg_without_prefix = bytes.fromhex("439b71c8ddeff63004e4ff1f9764a57dcf20232b79d9d669aef0e31c42be8e44208f7d868d0133acb334047f30e9399dece226ccd98e5df5330adf7f3562905179f540cac07906aea9260fffc35a1a67e577ec598c143068fc84953bf100000008762700054a00005ef2cf9c0101009000000000000003e80000000000000001000000002367b880")
         # good messages
         self.assertNotEqual(
             None,

@@ -168,7 +168,7 @@ class TestUnifiedPassword(ElectrumTestCase):
         paths.append(self._restore_wallet_from_text(wifs, password="123456", encrypt_file=False))
         paths.append(self._restore_wallet_from_text(wifs, password=None))
         # addrs
-        addrs = "tb1qq2tmmcngng78nllq2pvrkchcdukemtj5s6l0zu tb1qm7ckcjsed98zhvhv3dr56a22w3fehlkxyh4wgd"
+        addrs = "tc1qq2tmmcngng78nllq2pvrkchcdukemtj5729ce7 tc1qm7ckcjsed98zhvhv3dr56a22w3fehlkx280en0"
         paths.append(self._restore_wallet_from_text(addrs, password="123456", encrypt_file=True))
         paths.append(self._restore_wallet_from_text(addrs, password="123456", encrypt_file=False))
         paths.append(self._restore_wallet_from_text(addrs, password=None))

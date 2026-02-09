@@ -45,7 +45,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         self.assertTrue(wallet1.has_lightning())
         # create payreq
         addr = wallet1.get_unused_address()
-        pr_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr, exp_delay=86400)
+        pr_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr, exp_delay=86400)
         pr = wallet1.get_request(pr_key)
         self.assertIsNotNone(pr)
         self.assertTrue(pr.is_lightning())
@@ -63,7 +63,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         self.assertTrue(wallet1.has_lightning())
         # create payreq
         addr = wallet1.get_unused_address()
-        pr_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr, exp_delay=86400)
+        pr_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr, exp_delay=86400)
         pr = wallet1.get_request(pr_key)
         self.assertIsNotNone(pr)
         self.assertTrue(pr.is_lightning())
@@ -93,7 +93,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         self.assertFalse(wallet1.has_lightning())
         # create payreq
         addr = wallet1.get_unused_address()
-        pr_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr, exp_delay=86400)
+        pr_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr, exp_delay=86400)
         pr = wallet1.get_request(pr_key)
         self.assertIsNotNone(pr)
         self.assertFalse(pr.is_lightning())
@@ -123,7 +123,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         self.assertTrue(wallet1.has_lightning())
         # create payreq
         addr = wallet1.get_unused_address()
-        pr_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr, exp_delay=86400)
+        pr_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr, exp_delay=86400)
         pr = wallet1.get_request(pr_key)
         self.assertIsNotNone(pr)
         self.assertTrue(pr.is_lightning())
@@ -151,7 +151,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         self.assertTrue(wallet1.has_lightning())
         # create payreq1
         addr1 = wallet1.get_unused_address()
-        pr1_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr1, exp_delay=86400)
+        pr1_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr1, exp_delay=86400)
         pr1 = wallet1.get_request(pr1_key)
         self.assertTrue(pr1.is_lightning())
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr1))
@@ -161,7 +161,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         # create payreq2
         addr2 = wallet1.get_unused_address()
         self.assertNotEqual(addr1, addr2)
-        pr2_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr2, exp_delay=86400)
+        pr2_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr2, exp_delay=86400)
         pr2 = wallet1.get_request(pr2_key)
         self.assertTrue(pr2.is_lightning())
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr2))
@@ -174,7 +174,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         # create payreq3, which should auto-reuse addr1
         addr3 = wallet1.get_unused_address()
         self.assertEqual(addr1, addr3)
-        pr3_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr3, exp_delay=86400)
+        pr3_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr3, exp_delay=86400)
         pr3 = wallet1.get_request(pr3_key)
         self.assertTrue(pr3.is_lightning())
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr3))
@@ -190,7 +190,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         # create payreq4, which should not reuse addr2
         addr4 = wallet1.get_unused_address()
         self.assertEqual(3, len({addr1, addr2, addr3, addr4}))
-        pr4_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr4, exp_delay=86400)
+        pr4_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr4, exp_delay=86400)
         pr4 = wallet1.get_request(pr4_key)
         self.assertTrue(pr4.is_lightning())
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr4))
@@ -204,7 +204,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         self.assertTrue(wallet1.has_lightning())
         # create payreq1
         addr1 = wallet1.get_unused_address()
-        pr1_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr1, exp_delay=86400)
+        pr1_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr1, exp_delay=86400)
         pr1 = wallet1.get_request(pr1_key)
         self.assertTrue(pr1.is_lightning())
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr1))
@@ -217,7 +217,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         # create payreq2
         addr2 = wallet1.get_unused_address()
         self.assertEqual(addr1, addr2)
-        pr2_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr2, exp_delay=86400)
+        pr2_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr2, exp_delay=86400)
         pr2 = wallet1.get_request(pr2_key)
         self.assertTrue(pr2.is_lightning())
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr2))
@@ -232,7 +232,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         self.assertTrue(wallet1.has_lightning())
         # create payreq1
         addr1 = wallet1.get_unused_address()
-        pr1_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr1, exp_delay=86400)
+        pr1_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr1, exp_delay=86400)
         pr1 = wallet1.get_request(pr1_key)
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr1))
         self.assertFalse(pr1.has_expired())
@@ -245,7 +245,7 @@ class TestWalletPaymentRequests(ElectrumTestCase):
         # create payreq2
         addr2 = wallet1.get_unused_address()
         self.assertEqual(addr1, addr2)
-        pr2_key = wallet1.create_request(amount_sat=10000, message="msg", address=addr2, exp_delay=86400)
+        pr2_key = wallet1.create_request(amount_sat=10000, asset=None, message="msg", address=addr2, exp_delay=86400)
         pr2 = wallet1.get_request(pr2_key)
         self.assertEqual(PR_UNPAID, wallet1.get_invoice_status(pr2))
         self.assertFalse(pr2.has_expired())
@@ -273,8 +273,9 @@ class TestBaseInvoice(ElectrumTestCase):
 
     async def test_arg_validation(self):
         amount_sat = 10_000
-        outputs = [PartialTxOutput.from_address_and_value("tb1qmjzmg8nd4z56ar4fpngzsr6euktrhnjg9td385", amount_sat)]
+        outputs = [PartialTxOutput.from_address_and_value("tc1qmjzmg8nd4z56ar4fpngzsr6euktrhnjgtmhxuk", amount_sat)]
         invoice = Invoice(
+            asset=None,
             amount_msat=amount_sat * 1000,
             message="mymsg",
             time=1692716965,
@@ -285,12 +286,13 @@ class TestBaseInvoice(ElectrumTestCase):
             lightning_invoice=None,
         )
         with self.assertRaises(InvoiceError):
-            invoice.amount_msat = 10**20
+            invoice.amount_msat = 10**22
         with self.assertRaises(InvoiceError):
-            invoice.set_amount_msat(10**20)
+            invoice.set_amount_msat(10**22)
         with self.assertRaises(InvoiceError):
             invoice2 = Invoice(
-                amount_msat=10**20,
+                asset=None,
+                amount_msat=10**22,
                 message="mymsg",
                 time=1692716965,
                 exp=LN_EXPIRY_NEVER,
