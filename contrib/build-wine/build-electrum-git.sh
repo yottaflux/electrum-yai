@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NAME_ROOT=electrum-ravencoin
+NAME_ROOT=electrum-yottaflux
 
 export PYTHONDONTWRITEBYTECODE=1  # don't create __pycache__/ folders with .pyc files
 
@@ -47,7 +47,7 @@ $WINE_PYTHON -m pip install --no-build-isolation --no-dependencies --no-warn-scr
     --cache-dir "$WINE_PIP_CACHE_DIR" -r "$CONTRIB"/deterministic-build/requirements-hw.txt
 
 
-info "Installing pre-built ravencoin requirements..."
+info "Installing pre-built yottaflux requirements..."
 X16R="x16r_hash-1.0-cp310-cp310-win32.whl"
 X16RV2="x16rv2_hash-1.0-cp310-cp310-win32.whl"
 KAWPOW="kawpow-0.9.4.4-cp310-cp310-win32.whl"
