@@ -1070,8 +1070,7 @@ class Channel(AbstractChannel):
                                                               commit=pending_remote_commitment,
                                                               ctx_output_idx=ctx_output_idx,
                                                               htlc=htlc)
-            raise NotImplementedError('wallet insert')
-            sig = bfh(htlc_tx.sign_txin(0, their_remote_htlc_privkey))
+            sig = bfh(htlc_tx.sign_txin(0, their_remote_htlc_privkey, wallet=None))
             htlc_sig = ecc.sig_string_from_der_sig(sig[:-1])
             htlcsigs.append((ctx_output_idx, htlc_sig))
         htlcsigs.sort()
@@ -1093,7 +1092,7 @@ class Channel(AbstractChannel):
         assert len(htlc_sigs) == 0 or type(htlc_sigs[0]) is bytes
 
         pending_local_commitment = self.get_next_commitment(LOCAL)
-        preimage_hex = pending_local_commitment.serialize_preimage(0)
+        preimage_hex = pending_local_commitment.serialize_preimage(0, wallet=None)
         pre_hash = sha256d(bfh(preimage_hex))
         if not ecc.verify_signature(self.config[REMOTE].multisig_key.pubkey, sig, pre_hash):
             raise LNProtocolWarning(
@@ -1139,7 +1138,7 @@ class Channel(AbstractChannel):
                                                           commit=ctx,
                                                           ctx_output_idx=ctx_output_idx,
                                                           htlc=htlc)
-        preimage_hex = htlc_tx.serialize_preimage(0)
+        preimage_hex = htlc_tx.serialize_preimage(0, wallet=None)
         pre_hash = sha256d(bfh(preimage_hex))
         remote_htlc_pubkey = derive_pubkey(self.config[REMOTE].htlc_basepoint.pubkey, pcp)
         if not ecc.verify_signature(remote_htlc_pubkey, htlc_sig, pre_hash):
@@ -1596,14 +1595,13 @@ class Channel(AbstractChannel):
                                      funding_sat=self.constraints.capacity,
                                      outputs=outputs)
 
-        raise NotImplementedError('wallet insert')
-        der_sig = bfh(closing_tx.sign_txin(0, self.config[LOCAL].multisig_key.privkey))
+        der_sig = bfh(closing_tx.sign_txin(0, self.config[LOCAL].multisig_key.privkey, wallet=None))
         sig = ecc.sig_string_from_der_sig(der_sig[:-1])
         return sig, closing_tx
 
     def signature_fits(self, tx: PartialTransaction) -> bool:
         remote_sig = self.config[LOCAL].current_commitment_signature
-        preimage_hex = tx.serialize_preimage(0)
+        preimage_hex = tx.serialize_preimage(0, wallet=None)
         msg_hash = sha256d(bfh(preimage_hex))
         assert remote_sig
         res = ecc.verify_signature(self.config[REMOTE].multisig_key.pubkey, remote_sig, msg_hash)
@@ -1612,8 +1610,7 @@ class Channel(AbstractChannel):
     def force_close_tx(self) -> PartialTransaction:
         tx = self.get_latest_commitment(LOCAL)
         assert self.signature_fits(tx)
-        raise NotImplementedError('wallet insert')
-        tx.sign({self.config[LOCAL].multisig_key.pubkey.hex(): (self.config[LOCAL].multisig_key.privkey, True)})
+        tx.sign({self.config[LOCAL].multisig_key.pubkey.hex(): (self.config[LOCAL].multisig_key.privkey, True)}, wallet=None)
         remote_sig = self.config[LOCAL].current_commitment_signature
         remote_sig = ecc.der_sig_from_sig_string(remote_sig) + Sighash.to_sigbytes(Sighash.ALL)
         tx.add_signature_to_txin(txin_idx=0,

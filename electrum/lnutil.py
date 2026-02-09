@@ -615,7 +615,6 @@ def make_htlc_tx_inputs(htlc_output_txid: str, htlc_output_index: int,
                           nsequence=0)
     txin.witness_script = bfh(witness_script)
     txin.script_sig = b''
-    raise NotImplementedError()
     txin._trusted_value_sats = amount_msat // 1000
     c_inputs = [txin]
     return c_inputs
@@ -883,7 +882,6 @@ def make_funding_input(local_funding_pubkey: bytes, remote_funding_pubkey: bytes
     ppubkeys = [descriptor.PubkeyProvider.parse(pk) for pk in pubkeys]
     multi = descriptor.MultisigDescriptor(pubkeys=ppubkeys, thresh=2, is_sorted=True)
     c_input.script_descriptor = descriptor.WSHDescriptor(subdescriptor=multi)
-    raise NotImplementedError()
     c_input._trusted_value_sats = funding_sat
     return c_input
 
@@ -1054,8 +1052,7 @@ def make_commitment_output_to_remote_address(remote_payment_pubkey: bytes) -> st
     return bitcoin.pubkey_to_address('p2wpkh', remote_payment_pubkey.hex())
 
 def sign_and_get_sig_string(tx: PartialTransaction, local_config, remote_config):
-    raise NotImplementedError('wallet insert')
-    tx.sign({local_config.multisig_key.pubkey.hex(): (local_config.multisig_key.privkey, True)})
+    tx.sign({local_config.multisig_key.pubkey.hex(): (local_config.multisig_key.privkey, True)}, wallet=None)
     sig = tx.inputs()[0].part_sigs[local_config.multisig_key.pubkey]
     sig_64 = sig_string_from_der_sig(sig[:-1])
     return sig_64

@@ -192,7 +192,10 @@ class WalletDB(JsonDB):
         return result
 
     def requires_upgrade(self):
-        return self.get_seed_version() < FINAL_SEED_VERSION
+        seed_version = self.get_seed_version()
+        if seed_version is None:
+            return False
+        return seed_version < FINAL_SEED_VERSION
 
     @profiler
     def upgrade(self):
@@ -226,7 +229,7 @@ class WalletDB(JsonDB):
     @locked
     def get_seed_version(self):
         seed_version = self.get('seed_version')
-        if seed_version > FINAL_SEED_VERSION:
+        if seed_version is not None and seed_version > FINAL_SEED_VERSION:
             raise WalletFileException('This version of Electrum is too old to open this wallet.\n'
                                       '(highest supported storage version: {}, version of this file: {})'
                                       .format(FINAL_SEED_VERSION, seed_version))

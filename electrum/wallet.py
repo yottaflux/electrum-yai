@@ -2344,6 +2344,7 @@ class Abstract_Wallet(ABC, Logger, EventListener):
                 inputs=old_inputs,
                 outputs=fixed_outputs,
                 change_addrs=change_addrs,
+                restricted_change_address={},
                 fee_estimator_vb=fee_estimator,
                 dust_threshold=self.dust_threshold())
         except NotEnoughFunds as e:
@@ -2567,11 +2568,10 @@ class Abstract_Wallet(ABC, Logger, EventListener):
         address = address or txin.address
         # add witness_utxo
         if txin.witness_utxo is None and txin.is_segwit() and address:
-            raise NotImplementedError()
             received, spent = self.adb.get_addr_io(address)
             item = received.get(txin.prevout.to_str())
             if item:
-                txin_value = item[2]
+                txin_value = item[3]
                 txin.witness_utxo = TxOutput.from_address_and_value(address, txin_value)
         # add utxo
         if txin.utxo is None:
