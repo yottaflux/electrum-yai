@@ -65,7 +65,7 @@ _QUALIFIER_INDICATOR = r'^[#][A-Z0-9._]{3,}$'
 _SUB_QUALIFIER_INDICATOR = r'^#[A-Z0-9._]+\/#[A-Z0-9._]+$'
 _RESTRICTED_INDICATOR = r'^[\$][A-Z0-9._]{3,}$'
 
-_BAD_NAMES = '^RVN$|^RAVEN$|^RAVENCOIN$|^RVNS$|^RAVENS$|^RAVENCOINS$|^#RVN$|^#RAVEN$|^#RAVENCOIN$|^#RVNS$|^#RAVENS$|^#RAVENCOINS$'
+_BAD_NAMES = '^YAI$|^YOTTAFLUX$|^#YAI$|^#YOTTAFLUX$'
 
 def _isMatchAny(symbol: str, badMatches: Sequence[str]) -> bool:
     return any((re.match(x, symbol) for x in badMatches))

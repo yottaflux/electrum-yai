@@ -42,8 +42,8 @@ def read_json(filename, default):
     return r
 
 
-GIT_REPO_URL = "https://github.com/Electrum-RVN-SIG/electrum-ravencoin"
-GIT_REPO_ISSUES_URL = "https://github.com/Electrum-RVN-SIG/electrum-ravencoin/issues"
+GIT_REPO_URL = "https://github.com/nicholasgasior/yottaflux"
+GIT_REPO_ISSUES_URL = "https://github.com/nicholasgasior/yottaflux/issues"
 BIP39_WALLET_FORMATS = read_json('bip39_wallet_formats.json', [])
 
 
@@ -106,33 +106,33 @@ class AbstractNet:
         return bytes.fromhex(bitcoin.rev_hex(cls.GENESIS))
 
 
-class RavencoinMainnet(AbstractNet):
+class YottafluxMainnet(AbstractNet):
     NET_NAME = "mainnet"
     TESTNET = False
     WIF_PREFIX = 128
-    ADDRTYPE_P2PKH = 60
-    ADDRTYPE_P2SH = 122
-    ADDRTYPE_P2SH_ALT = 122
+    ADDRTYPE_P2PKH = 78
+    ADDRTYPE_P2SH = 137
+    ADDRTYPE_P2SH_ALT = 137
     MATURE = 60
-    SEGWIT_HRP = "rc"
+    SEGWIT_HRP = "yc"
     BOLT11_HRP = SEGWIT_HRP
-    GENESIS = "0000006b444bc2f2ffe627be9d9e7e7a0730000870ef6eb6da46c8eae389df90"
+    GENESIS = "000000f13b9584fc6830148c59ec77e5671a5ac3ff0f26a9ae0679c0ca40f579"
     DEFAULT_PORTS = {'t': '50001', 's': '50002'}
     DEFAULT_SERVERS = read_json('servers.json', {})
     CHECKPOINTS = read_json('checkpoints.json', [])
     DGW_CHECKPOINTS = read_json('checkpoints_dgw.json', [])
     DGW_CHECKPOINTS_SPACING = 2016
-    DGW_CHECKPOINTS_START = 168 * DGW_CHECKPOINTS_SPACING  #338_688, DGW starts at 338_778
+    DGW_CHECKPOINTS_START = 0
 
-    X16Rv2ActivationTS = 1569945600
-    KawpowActivationTS = 1588788000
-    KawpowActivationHeight = 1219736
-    nDGWActivationBlock = 338778
+    X16Rv2ActivationTS = 0
+    KawpowActivationTS = 3567587327
+    KawpowActivationHeight = 999999999
+    nDGWActivationBlock = 1
 
-    DEFAULT_MESSAGE_CHANNELS = ['ELECTRUM_RAVENCOIN~notification']
-    ASSET_PREFIX = b'rvn'
-    SHORT_NAME = 'RVN'
-    LONG_NAME = 'Ravencoin'
+    DEFAULT_MESSAGE_CHANNELS = ['ELECTRUM_YOTTAFLUX~notification']
+    ASSET_PREFIX = b'yai'
+    SHORT_NAME = 'YAI'
+    LONG_NAME = 'Yottaflux'
 
     MULTISIG_ASSETS = False
 
@@ -152,7 +152,7 @@ class RavencoinMainnet(AbstractNet):
         'p2wsh': 0x02aa7ed3,  # Zpub
     }
     XPUB_HEADERS_INV = inv_dict(XPUB_HEADERS)
-    BIP44_COIN_TYPE = 175
+    BIP44_COIN_TYPE = 5050
 
     BURN_AMOUNTS = BurnAmounts(
         IssueAssetBurnAmount=500,
@@ -167,20 +167,23 @@ class RavencoinMainnet(AbstractNet):
     )
 
     BURN_ADDRESSES = BurnAddresses(
-        IssueAssetBurnAddress='RXissueAssetXXXXXXXXXXXXXXXXXhhZGt',
-        ReissueAssetBurnAddress='RXReissueAssetXXXXXXXXXXXXXXVEFAWu',
-        IssueSubAssetBurnAddress='RXissueSubAssetXXXXXXXXXXXXXWcwhwL',
-        IssueUniqueAssetBurnAddress='RXissueUniqueAssetXXXXXXXXXXWEAe58',
-        IssueMsgChannelAssetBurnAddress='RXissueMsgChanneLAssetXXXXXXSjHvAY',
-        IssueQualifierAssetBurnAddress='RXissueQuaLifierXXXXXXXXXXXXUgEDbC',
-        IssueSubQualifierAssetBurnAddress='RXissueSubQuaLifierXXXXXXXXXVTzvv5',
-        IssueRestrictedAssetBurnAddress='RXissueRestrictedXXXXXXXXXXXXzJZ1q',
-        AddNullQualifierTagBurnAddress='RXaddTagBurnXXXXXXXXXXXXXXXXZQm5ya',
-        GlobalBurnAddress='RXBurnXXXXXXXXXXXXXXXXXXXXXXWUo9FV'
+        IssueAssetBurnAddress='YissueAssetXXXXXXXXXXXXXXXXXW8oK1h',
+        ReissueAssetBurnAddress='YReissueAssetXXXXXXXXXXXXXXXYcNAB6',
+        IssueSubAssetBurnAddress='YissueSubAssetXXXXXXXXXXXXXXcAjBNU',
+        IssueUniqueAssetBurnAddress='YissueUniqueAssetXXXXXXXXXXXZAr1F6',
+        IssueMsgChannelAssetBurnAddress='YissueMsgChanneLAssetXXXXXXXdbjHqe',
+        IssueQualifierAssetBurnAddress='YissueQuaLifierXXXXXXXXXXXXXTQvwL8',
+        IssueSubQualifierAssetBurnAddress='YissueSubQuaLifierXXXXXXXXXXYJchwm',
+        IssueRestrictedAssetBurnAddress='YissueRestrictedXXXXXXXXXXXXUkSk3r',
+        AddNullQualifierTagBurnAddress='YaddTagBurnXXXXXXXXXXXXXXXXXZJAYt2',
+        GlobalBurnAddress='YburnXXXXXXXXXXXXXXXXXXXXXXXYqtbxJ'
     )
 
+    COMMUNITY_FUND_ADDRESS_DEV = 'YcMZLejJUFSzXYqp5wqrqRyKg3ySMxzYte'
+    COMMUNITY_FUND_ADDRESS_SUBSIDY = 'YavbEessbLmxPPYMAjLH2kER4NyLoiDjcm'
 
-class RavencoinTestnet(AbstractNet):
+
+class YottafluxTestnet(AbstractNet):
     NET_NAME = "testnet"
     BIP44_COIN_TYPE = 1
     LN_REALM_BYTE = 0
@@ -194,7 +197,7 @@ class RavencoinTestnet(AbstractNet):
     MATURE = 60
     SEGWIT_HRP = "tc"
     BOLT11_HRP = SEGWIT_HRP
-    GENESIS = "000000ecfc5e6324a079542221d00e10362bdc894d56500c414060eea8a3ad5a"
+    GENESIS = "000000709fd50f9c838d68747b3b747da72c753ccc0733365220ff4cc5ea1c49"
     DEFAULT_PORTS = {'t': '51001', 's': '51002'}
     DEFAULT_SERVERS = read_json('servers_testnet.json', {})
     CHECKPOINTS = []
@@ -202,17 +205,17 @@ class RavencoinTestnet(AbstractNet):
     DGW_CHECKPOINTS_SPACING = 2016
     DGW_CHECKPOINTS_START = 0
 
-    X16Rv2ActivationTS = 1567533600
-    KawpowActivationTS = 1585159200
-    KawpowActivationHeight = 231544
+    X16Rv2ActivationTS = 0
+    KawpowActivationTS = 3567587327
+    KawpowActivationHeight = 999999999
     nDGWActivationBlock = 1
 
     DEFAULT_MESSAGE_CHANNELS = []
-    ASSET_PREFIX = b'rvn'
-    SHORT_NAME = 'tRVN'
-    LONG_NAME = 'Ravencoin'
+    ASSET_PREFIX = b'yai'
+    SHORT_NAME = 'tYAI'
+    LONG_NAME = 'Yottaflux'
     MULTISIG_ASSETS = False
-    
+
     XPRV_HEADERS = {
         'standard': 0x04358394,  # tprv
         'p2wpkh-p2sh': 0x044a4e28,  # uprv
@@ -255,6 +258,21 @@ class RavencoinTestnet(AbstractNet):
         GlobalBurnAddress='n1BurnXXXXXXXXXXXXXXXXXXXXXXU1qejP'
     )
 
+    COMMUNITY_FUND_ADDRESS_DEV = 'n1MDTt2zQJ7vkHxnMudX7P67M76umc57FU'
+    COMMUNITY_FUND_ADDRESS_SUBSIDY = 'n3zrHVsrDA52JgvsnLmd7Y782VC9JtANcQ'
+
+
+class YottafluxRegtest(YottafluxTestnet):
+    NET_NAME = "regtest"
+    GENESIS = "45a2ecb9ae084bcd083ac8ece09e30a239affd25ac2f3d3e7bb48463caa0d432"
+    DEFAULT_PORTS = {'t': '50011', 's': '50012'}
+    DEFAULT_SERVERS = {}
+    SEGWIT_HRP = "tc"
+    BOLT11_HRP = SEGWIT_HRP
+
+    KawpowActivationTS = 1707491606  # nGenesisTime + 1 (regtest activates KawPoW immediately)
+    KawpowActivationHeight = 1
+
 
 def all_subclasses(cls):
     """Return all (transitive) subclasses of cls."""
@@ -266,13 +284,22 @@ def all_subclasses(cls):
 NETS_LIST = tuple(all_subclasses(AbstractNet))
 
 # don't import net directly, import the module instead (so that net is singleton)
-net = RavencoinMainnet
+net = YottafluxMainnet
+
+# Backward-compat aliases (referenced in LN code, tests, plugins)
+BitcoinMainnet = YottafluxMainnet
+BitcoinTestnet = YottafluxTestnet
+BitcoinRegtest = YottafluxRegtest
 
 
 def set_mainnet():
     global net
-    net = RavencoinMainnet
+    net = YottafluxMainnet
 
 def set_testnet():
     global net
-    net = RavencoinTestnet
+    net = YottafluxTestnet
+
+def set_regtest():
+    global net
+    net = YottafluxRegtest

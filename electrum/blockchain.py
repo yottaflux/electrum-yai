@@ -42,8 +42,8 @@ if TYPE_CHECKING:
 
 _logger = get_logger(__name__)
 
-MAX_TARGET = 0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-KAWPOW_LIMIT = 0x0000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff
+MAX_TARGET = 0x00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+KAWPOW_LIMIT = 0x0000000fffff0000000000000000000000000000000000000000000000000000
 
 HEADER_SIZE = 120  # bytes
 LEGACY_HEADER_SIZE = 80
@@ -678,7 +678,7 @@ class Blockchain(Logger):
             h, t = self.checkpoints[index][dgw_height_checkpoint]
             return t
         # There was a difficulty reset for kawpow
-        elif not constants.net.TESTNET and height in range(1219736, 1219736 + 180):  # kawpow reset
+        elif not constants.net.TESTNET and height in range(constants.net.KawpowActivationHeight, constants.net.KawpowActivationHeight + 180):  # kawpow reset
             return KAWPOW_LIMIT
         # If we have a DWG header already saved to our header cache (i.e. for a reorg), get that
         elif height <= self.height():
